@@ -1,38 +1,26 @@
 import { Router } from "express";
+import { ProductsController } from "./controllers/ProductsController";
+
 
 export const routes = Router()
+//
+const products = new ProductsController()
+
 
 // Produtos
 
-routes.get('/products', async(request,response) => {
-
-})
-routes.post('/products', async(request,response) => {
-    
-})
-routes.put('/products', async(request,response) => {
-    
-})
-routes.delete('/products', async(request,response) => {
-    
-})
+routes.get('/products', products.list)
+routes.post('/products', products.create)
+routes.put('/products/:id', products.update)
+routes.delete('/products/:id', products.delete)
 
 // Vendas 
-routes.post('/sale', async(request, response) => {
-
-})
-routes.put('/sale', async(request, response) => {
-
-})
+routes.post('/sale', async(request, response) => {})
+routes.put('/sale', async(request, response) => {})
 
 // Ordem de Serviços
-routes.post('/service', async(request,response) => {
-
-})
-
-routes.put('/service', async(request,response) => {
-
-})
+routes.post('/service', async(request,response) => {})
+routes.put('/service', async(request,response) => {})
 
 // Relatórios
 
