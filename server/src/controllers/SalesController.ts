@@ -26,4 +26,13 @@ export class SalesController {
         })
         return response.status(201).send()
     }
+    async edit( request: Request, response:Response) {
+        const { id } = request.params
+        const { paid } = request.body
+        const sells = await prismaClient.sell.update({
+            where: { id },
+            data: { paid }
+        })
+        return response.status(200).send()
+    }
 }
