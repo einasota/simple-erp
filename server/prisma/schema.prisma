@@ -26,7 +26,7 @@ model Sell {
   updateAt    DateTime @updatedAt
   products    String // Json
   value       Decimal // Valor
-  discont     Decimal // Desconto para da o valor final
+  discount    Decimal // Desconto para da o valor final
   hasWarranty Boolean // Se há garantia
   warranty    DateTime // Data da garantia
   paid        Boolean
@@ -51,6 +51,8 @@ model User {
 model Service {
   id          String   @id @default(uuid())
   name        String
+  phone       Int
+  address     String
   createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
   products    String

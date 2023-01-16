@@ -1,0 +1,17 @@
+{
+	"Create Controllers with Prisma Client": {
+		"scope": "typescript",
+		"prefix": "ctr",
+		"body": [
+			"import { Request, Response } from \"express\";",
+			"import { prismaClient } from \"../database/PrismaClient\"",
+			"export class $TM_FILENAME_BASE {",
+			"    async handle (request:Request, response:Response){",
+			"",
+			"      return response.status(201).send()",
+			"    }",
+			"}"
+		],
+		"description": "Create Controllers with Prisma Client"
+	}
+}
