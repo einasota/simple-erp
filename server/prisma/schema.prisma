@@ -20,18 +20,19 @@ model Product {
 }
 
 model Sell {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   client      String
-  createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
-  products    String // Json
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
+  products    Json // Json
   value       Decimal // Valor
-  discount    Decimal // Desconto para da o valor final
+  method      Decimal   @default(0)
+  discount    Decimal?  @default(0) // Desconto para da o valor final
   hasWarranty Boolean // Se há garantia
-  warranty    DateTime // Data da garantia
+  warranty    DateTime? // Data da garantia
   paid        Boolean
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
 
   @@map("sells")
 }
@@ -55,9 +56,10 @@ model Service {
   address     String
   createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
-  products    String
+  products    Json?
   description String
   value       Decimal
+  method      Decimal  @default(0)
   warranty    DateTime
   state       Int
   userId      String

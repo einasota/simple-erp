@@ -21,7 +21,7 @@ export class SalesController {
                 hasWarranty,
                 warranty,
                 paid,
-                userId
+                userId: "1"
             }
         })
         return response.status(201).send()

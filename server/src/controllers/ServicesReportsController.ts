@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { prismaClient } from "../database/PrismaClient"
+import dayjs from "dayjs";
 export class ServicesReportsController {
     async monthly (request:Request, response:Response){
-        const month = new Date()
-        month.setMonth(new Date().getMonth() - 1)
+        const month = dayjs(new Date()).subtract(1, 'month').toDate()
         const results = prismaClient.sell.findMany({
             where: {
                 createdAt: {

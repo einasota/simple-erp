@@ -1,7 +1,7 @@
 import express, { request } from 'express'
 import dotenv from 'dotenv'
 import { routes } from "./routes"
-
+import './lib/dayjs'
 dotenv.config()
 
 const app = express()

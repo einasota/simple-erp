@@ -21,7 +21,7 @@ routes.delete('/products/:id', products.delete)
 
 // Vendas 
 routes.post('/sales', sales.create)
-routes.put('/sales', sales.edit)
+routes.patch('/sales', sales.edit)
 
 // Ordem de Serviços
 routes.post('/service', services.create)
