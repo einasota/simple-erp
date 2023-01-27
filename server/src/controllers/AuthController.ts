@@ -42,7 +42,7 @@ export class AuthController {
                 expiresIn: 14400,
             })
             user.pass = ""
-            return response.status(200).send({user, token})
+            return response.status(200).send({token})
         } catch (error) {
             console.log(error)
             return response.status(400).send({error: 'invalid login and password, check your information'})
