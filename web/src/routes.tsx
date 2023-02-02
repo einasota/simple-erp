@@ -7,8 +7,7 @@ export default function RootRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Login />} />
-            <Route path='/home' element={<ProtectedLayout children={<Home />}/>}>       
-            </Route>
+            <Route path='/home' element={<ProtectedLayout children={<Home />}/>}/>
         </Routes>
     );
 }

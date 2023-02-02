@@ -1,29 +1,31 @@
-import * as Label from "@radix-ui/react-label";
-import { SunDim, MoonStars } from "phosphor-react";
 import { FormEvent, useState } from "react";
+// import { SunDim, MoonStars } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider/userAuth";
-import { api } from "../lib/api";
+import * as Label from "@radix-ui/react-label";
 
 export default function Login() {
-    const [login, setLogin] = useState('')
-    const [pass, setPass] = useState('')
+    const [login, setLogin] = useState("");
+    const [pass, setPass] = useState("");
 
-    const auth = useAuth()
-    const navigate = useNavigate()
+    const auth = useAuth();
+    const navigate = useNavigate();
     async function handleLogin(event: FormEvent) {
         event.preventDefault();
         try {
-            await auth.authenticate(login, pass)
-            navigate('/home')
+            await auth.authenticate(login, pass);
+            navigate("/home");
         } catch (error) {
-            alert('Usuário ou senha incorretos')
+           alert("Usuário ou senha incorretos")
         }
     }
     return (
         <div className="w-screen h-screen bg-slate-500 flex justify-center items-center">
-            <div className="bg-zinc-100 w-[30rem] h-[25rem] p-8 rounded-xl border-2 border-blue-400">
-                <form className="flex flex-col items-center justify-center" onSubmit={handleLogin}>
+            <div className="bg-zinc-100 w-[30rem] h-[25rem] p-8 rounded-xl border-2 border-blue-400 shadow-2xl">
+                <form
+                    className="flex flex-col items-center justify-center"
+                    onSubmit={handleLogin}
+                >
                     <span className="text-4xl mt-4 uppercase">
                         Elétrica Soares
                     </span>
@@ -35,10 +37,10 @@ export default function Login() {
                             type="text"
                             id="username"
                             name="login"
-                            className="h-10 rounded-lg border-2 border-blue-400 text-2xl text-center"
+                            className="h-10 rounded-lg border-2 border-blue-400 text-2xl text-center bg-gray-200"
                             autoComplete="off"
                             value={login}
-                            onChange={(event) => setLogin(event.target.value) }
+                            onChange={(event) => setLogin(event.target.value)}
                             required
                         />
                     </div>
@@ -50,13 +52,13 @@ export default function Login() {
                             type="password"
                             id="password"
                             name="pass"
-                            className="h-10 border-2 border-blue-400 rounded-lg text-2xl text-center"
+                            className="h-10 border-2 border-blue-400 rounded-lg text-2xl text-center bg-gray-200"
                             value={pass}
                             onChange={(event) => setPass(event.target.value)}
                             required
                         />
                     </div>
-                    <button className="bg-blue-600 w-32 h-16 mt-8 rounded-lg text-white border-2 border-blue-400 hover:bg-blue-500 hover:border-blue-300">
+                    <button  id="loginbutton" className="bg-blue-600 w-32 h-16 mt-8 rounded-lg text-white border-2 border-blue-400 hover:bg-blue-500 hover:border-blue-300">
                         Login
                     </button>
                 </form>

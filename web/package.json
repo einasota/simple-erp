@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@fontsource/lexend": "^4.5.15",
+    "@radix-ui/react-alert-dialog": "^1.0.2",
     "@radix-ui/react-label": "^2.0.0",
     "axios": "^1.2.5",
     "history": "^5.3.0",
