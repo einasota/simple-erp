@@ -10,7 +10,6 @@ export function getUserLocalStorage () {
     if (!json) {
         return null
     }
-    console.log(json)
     const user = JSON.parse(json)
     return user ?? null
 }

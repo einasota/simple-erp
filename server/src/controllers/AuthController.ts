@@ -49,4 +49,18 @@ export class AuthController {
             return response.status(400).send({error: 'invalid login and password, check your information'})
         }
     }
+    async username (request:Request, response:Response) {
+        try {
+            const usernames = await prismaClient.user.findMany({
+                select: {
+                    id: true,
+                    name: true
+                }
+            })
+            return response.status(200).send({usernames})
+        } catch (error) {
+            console.log(error)
+            return response.status(400).send({error: 'User not found'})
+        }
+    }
 }

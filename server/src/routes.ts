@@ -43,3 +43,4 @@ routes.get('/all-services', AuthenticationMiddleware, serviceReports.all) // Tod
 
 routes.post('/register', auth.register) // Registro de novo Usuário
 routes.post('/login', auth.login)
+routes.get('/usernames', AuthenticationMiddleware, auth.username)
