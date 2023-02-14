@@ -9,20 +9,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
     "@fontsource/lexend": "^4.5.15",
     "@radix-ui/react-alert-dialog": "^1.0.2",
+    "@radix-ui/react-checkbox": "^1.0.1",
+    "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-label": "^2.0.0",
+    "@radix-ui/react-radio-group": "^1.1.1",
     "axios": "^1.2.5",
     "dayjs": "^1.11.7",
     "history": "^5.3.0",
     "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
+    "react-currency-format": "^1.1.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"
   },
   "devDependencies": {
+    "@types/react-currency-format": "^1.0.0",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",

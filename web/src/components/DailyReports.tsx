@@ -1,60 +1,65 @@
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { api } from "../lib/api";
-import { TableRow } from "./TableRow";
+import { RowsDailyReports } from "./RowsDailyReports";
 
-type Daily = {
-    userId: string;
-    client: string;
-    value: number;
-    createdAt: string;
-    paid: boolean;
-};
+type Data = {
+    id: string,
+    userId: string,
+    client: string,
+    createdAt: string,
+    value: number,
+    paid: boolean
+}
 
 interface Username {
-    id: string,
-    name: string
+    id: string;
+    name: string;
 }
-    
 
 export function DailyReports() {
-    const [dailyData, setDailyData] = useState<Array<Daily>>([]);
-    const [username,setUsername ] = useState<Array<Username>>()
+    const [data, setData] = useState<Array<Data>>([])
+    const [username, setUsername] = useState<Array<Username>>();
+
     async function getData() {
         const daily = await api.get("/daily-report");
-        const usernames = await api.get('/usernames')
-        setDailyData(daily.data);
-        setUsername(usernames.data.usernames)
+        const usernames = await api.get("/usernames");
+        setData(daily.data)
+        setUsername(usernames.data.usernames);
     }
-    function getUsername(id:string){
+
+    function getUsername(id: string) {
         const name = username!.find((item) => {
-            if(item.id === id){
-                return item
+            if (item.id === id) {
+                return item;
             }
-        })
-        
-        return `${name!.name}`
+        });
+
+        return `${name!.name}`;
     }
     useEffect(() => {
-        getData();
+        getData()
     }, []);
 
-    
-
     return (
-        <table className="w-3/4 h-2/4 overflow-y-auto border border-zinc-800 text-center bg-white">
-            <tr className="border border-zinc-700">
-                <th className="border border-zinc-700">Vendedor</th>
-                <th className="border border-zinc-700">Cliente</th>
-                <th className="border border-zinc-700">Valor</th>
-                <th className="border border-zinc-700">Hora</th>
-                <th className="border border-zinc-700">Pago?</th>
-            </tr>
-            {dailyData.map((item, i) => {
-                return (
-                    <TableRow key={i} username={getUsername(item.userId)} client={item.client} createdAt={item.createdAt} paid={item.paid} value={item.value} />
-                );
-            })}
-        </table>
+        <div className="h-2/4 w-3/4 bg-white">
+            <table className="block ">
+                <thead className="block">
+                    <tr>
+                        <th className="inline-block">Vendedor</th>
+                        <th className="inline-block">Cliente</th>
+                        <th className="inline-block">Hora</th>
+                        <th className="inline-block">Valor</th>
+                        <th className="inline-block">Pagou?</th>
+                    </tr>
+                </thead>
+                <tbody className="block h-full overflow-y-auto">
+                    {data.map((item) => {
+                        return <RowsDailyReports key={item.id} username={getUsername(item.userId)} client={item.client} createdAt={item.createdAt} paid={item.paid} value={item.value} />
+                    })}
+                </tbody>
+            </table>
+        </div>
     );
 }
