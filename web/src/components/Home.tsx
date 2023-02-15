@@ -14,8 +14,7 @@ export function Home() {
                     Novo Serviço
                 </button>
             </div>
-            {/* <DailyReports /> */}
-            <div className="h-2/4 w-3/4 bg-white"></div>
+            <DailyReports />
         </div>
     );
 }

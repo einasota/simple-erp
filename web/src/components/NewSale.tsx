@@ -7,6 +7,7 @@ import { RadioMethod } from './RadioMethod';
 import CurrencyFormat from 'react-currency-format';
 import dayjs from 'dayjs';
 import { RadioGroupContextValue } from '@radix-ui/react-radio-group';
+import { ProductsList } from './ProductsList';
 
 type Product = {
     id: string,
@@ -16,31 +17,27 @@ type Product = {
 }
 
 export function NewSale() {
-    const [products, setProducts] = useState<Array<Product>>([])
     const [paid, setPaid] = useState<Checkbox.CheckedState>(false)
     const [warranty, setWarranty] = useState<Checkbox.CheckedState>(false)
     const [method, setMethod] = useState<string>()
     const [client, setClient] = useState<string>()
     const [phone, setPhone] = useState<string>()
+    const [dialog1, setDialog1] = useState(false)
+    const [dialog2, setDialog2] = useState(false)
 
     const today = dayjs(new Date()).startOf('D').format('YYYY/MM/DD').toString()
 
-    async function getData() {
-        const productData = await api.get('/products')
-        setProducts(productData.data)
-    }
     console.log(method, client, phone)
     async function handleSubmit() {
 
     }
     useEffect(() => {
-        getData()
     }, [])
 
     return (
-        <Dialog.Root>
+        <Dialog.Root open={dialog1} >
             <Dialog.Trigger>
-                <button className="h-16 w-48 flex flex-row justify-center gap-3 items-center rounded-md bg-white border-2 border-white hover:border-zinc-200 hover:bg-zinc-300">
+                <button onClick={() => setDialog1(true)} className="h-16 w-48 flex flex-row justify-center gap-3 items-center rounded-md bg-white border-2 border-white hover:border-zinc-200 hover:bg-zinc-300">
                     <Package size={24} color="#0f0f0f" />
                     Nova venda
                 </button>
@@ -51,7 +48,7 @@ export function NewSale() {
                     <div className='flex flex-row justify-between items-center gap-2'>
                         <Dialog.Title className='flex flex-row gap-1 text-4xl font-semibold justify-center items-center mb-6'><Package size={36} color="#0f0f0f" /> Nova Venda</Dialog.Title>
                         <Dialog.Close className='flex justify-center items-center'>
-                            <button>
+                            <button onClick={() => setDialog1(false)}>
                                 <X size={24} color="#0f0f0f" />
                             </button>
                         </Dialog.Close>
@@ -69,10 +66,8 @@ export function NewSale() {
                                 </fieldset>
                             </div>
                             <fieldset>
-                                <label htmlFor="products">Produtos</label>
+                                <ProductsList open={dialog2} onOpenChange={setDialog2} openModal={() => setDialog2(true)} closeModal={() => setDialog2(false)}/>
                             </fieldset>
-                            <div className='h-full w-full flex items-center justify-center'>
-                            </div>
                             <fieldset className='flex flex-row justify-start items-center gap-3' >
                                 <Checkbox.Root name="hasWarranty" defaultChecked={false} className='h-8 w-8 border border-black flex justify-center items-center rounded-lg' checked={warranty} onCheckedChange={setWarranty}>
                                     <Checkbox.Indicator >
