@@ -1,30 +1,47 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { Package, Plus, X } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { MagnifyingGlass, Package, Plus, X } from "phosphor-react";
+import { FormEvent, useEffect, useState } from "react";
 import { api } from "../lib/api";
+import { Autocomplete, TextField } from "@mui/material";
 
 interface Props extends Dialog.DialogProps {
     openModal: React.MouseEventHandler<HTMLButtonElement>
     closeModal: React.MouseEventHandler<HTMLButtonElement>
+    setValue?: number
 }
 
 interface List {
-
+    id: string | undefined,
+    name: string | undefined,
+    quantity?: string | undefined,
+    type: number | undefined,
+    value: number | undefined,
+    totalValue?: string | undefined
 }
-interface Products {
+type ProductsData = {
     id: string,
     name: string,
     type: number,
     value: number,
 }
 
-export function ProductsList({ openModal, closeModal, ...rest }: Props) {
-    // const [list, setList] = useState<Array<>>([])
-    const [product, setProducts] = useState<Array<Products>>()
 
+export function ProductsList({ openModal, closeModal, setValue, ...rest }: Props) {
+    const [productData, setProductsData] = useState<Array<ProductsData>>([])
+    const [listItem, setListItem] = useState<Array<ProductsData>>([])
+    const [quantityItem, setQuantityItem] = useState<string>()
+    const [listProducts, setListProducts] = useState<Array<ProductsData>>([])
+    const [select, setSelect] = useState<ProductsData | null>()
+    const [open, setOpen] = useState(false)
+    const [valueTotal, setValueTotal] = useState(0)
     async function getData() {
         const Product = await api.get('/products')
-        setProducts(Product.data)
+        setProductsData(Product.data)
+    }
+    function handleList(event: FormEvent) {
+        event.preventDefault()
+        setOpen(false)
+        setListProducts(data => [...data, select])
     }
     useEffect(() => {
         getData()
@@ -33,8 +50,8 @@ export function ProductsList({ openModal, closeModal, ...rest }: Props) {
     return (
         <div>
             <div className="flex flex-row justify-between items-center ">
-                <span>Produtos</span>
-                <Dialog.Root {...rest} >
+                <span className="font-semibold text-xl">Produtos</span>
+                <Dialog.Root {...rest} open={open} onOpenChange={setOpen}>
                     <Dialog.Trigger>
                         <button type="button" onClick={openModal} className="flex justify-end items-start border bg-blue-600 hover:bg-blue-700 p-2 rounded-lg text-white gap-2">
                             <Plus size={24} color='#FFF' weight="bold" /> {" Adicionar"}
@@ -51,38 +68,52 @@ export function ProductsList({ openModal, closeModal, ...rest }: Props) {
                                     </button>
                                 </Dialog.Close>
                             </div>
-                            <div className="flex flex-col w-full h-full items-start justify-start gap-3">
-                                <fieldset className="flex flex-row justify-start items-center gap-3">
-                                    <label className="text-xl font-medium">Nome:</label>
-                                    <input type="text" name="name" id="name" autoComplete="off" className='p-2 w-full rounded-lg mt-2 bg-gray-200 text-black placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-zinc-900' />
-                                </fieldset>
-                                <fieldset className="flex flex-row justify-start items-center gap-3">
-                                    <label className="text-xl font-medium">Quantidade:</label>
-                                    <input type="number" name="quantity" id="quantity" className='p-2 rounded-lg mt-2 bg-gray-200 text-black placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-zinc-900' />
-                                </fieldset>
-                                <div>
-                                    <button className="flex justify-end items-start border bg-blue-600 hover:bg-blue-700 p-2 rounded-lg text-white gap-2">
-                                        <Plus size={24} weight='bold' color="#FFF" /> {" Adicionar"}
-                                    </button>
+                            <form onSubmit={handleList}>
+                                <div className="flex flex-col w-full h-full items-start justify-start gap-3">
+                                    <fieldset className="flex flex-row w-full justify-start items-center gap-3">
+                                        <label htmlFor="products" className="text-xl font-medium">Nome:</label>
+                                        <Autocomplete id='product-list' options={productData} getOptionLabel={item => item.name} onChange={(event: any, newValue: ProductsData | null) => { setSelect(newValue) }} fullWidth renderInput={(params) => <TextField {...params} className="w-full" label="Produtos" />} />
+                                    </fieldset>
+                                    <fieldset className="flex flex-row justify-start items-center gap-3">
+                                        <label className="text-xl font-medium">Quantidade:</label>
+                                        <input type="text" onChange={e => setQuantityItem(e.target.value)} name="quantity" id="quantity" className='p-2 rounded-lg mt-2 bg-gray-200 text-black placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-zinc-900' />
+                                    </fieldset>
+                                    <div>
+                                        <button type="submit" className="flex justify-end items-start border bg-blue-600 hover:bg-blue-700 p-2 rounded-lg text-white gap-2">
+                                            <Plus size={24} weight='bold' color="#FFF" /> {" Adicionar"}
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </Dialog.Content>
                     </Dialog.Portal>
                 </Dialog.Root>
             </div>
-            <div className="w-full h-64 my-4 rounded-lg border border-black">
-                <table className="w-full h-full">
+            <div className="w-full h-64 my-4 rounded-lg border overflow-auto border-black">
+                <table className="w-full h-auto border-separate border-spacing-0">
                     <thead>
                         <tr>
-                            <th>Nome:</th>
-                            <th>Quantidade:</th>
-                            <th>Tipo:</th>
-                            <th>Valor Unitário:</th>
-                            <th>Valor Total:</th>
+                            <th className="border-r-2 border-t-2 border-l-2 border-b-2 sticky top-0 bg-white  border-black w-1/5">Nome:</th>
+                            <th className="border-r-2 border-t-2 border-b-2 sticky top-0 bg-white border-black w-1/5">Quantidade:</th>
+                            <th className="border-r-2 border-t-2 border-b-2 sticky top-0 bg-white border-black w-1/5">Tipo:</th>
+                            <th className="border-r-2 border-t-2 border-b-2 sticky top-0 bg-white border-black w-1/5">Valor Unitário:</th>
+                            <th className="border-r-2 border-t-2 border-b-2 sticky top-0 bg-white border-black w-1/5">Valor Total:</th>
                         </tr>
                     </thead>
-                    <tbody>
-
+                    <tbody className="h-full w-full">
+                    {listProducts.length > 0 ? listProducts.map((item) => {
+                            const product = productData.find(unit => unit.id === item.id)
+                            const total = product!.value * Number(item.quantity)
+                            return (<div>
+                                        <tr className="h-12 w-full text-center">
+                                            <td className="w-1/5 border-b border-r border-l border-black">{product!.name}</td>
+                                            <td className="w-1/5 border-b border-r border-black">{item.quantity}</td>
+                                            <td className="w-1/5 border-b border-r border-black">{product!.type === 0 ? <span>KG</span> : <span>Un.</span>}</td>
+                                            <td className="w-1/5 border-b border-r border-black">{new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(product!.value)}</td>
+                                            <td className="w-1/5 border-b border-r border-black">{new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(total)}</td>
+                                        </tr>
+                                </div>
+                            )}) : <tr className="text-center font-semibold text-2xl"><td colSpan={5}> Não há produtos.</td></tr>}
                     </tbody>
                 </table>
             </div>

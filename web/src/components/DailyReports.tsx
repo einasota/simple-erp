@@ -37,7 +37,6 @@ export function DailyReports() {
 
         return `${name!.name}`;
     }
-    console.log(data.length)
     useEffect(() => {
         getData()
     }, []);
@@ -57,8 +56,8 @@ export function DailyReports() {
                 <tbody className="h-full w-full">
                     {data.length !== 0 ? data.map((item) => {
                         return <RowsDailyReports key={item.id} username={getUsername(item.userId)} client={item.client} createdAt={item.createdAt} paid={item.paid} value={item.value} />
-                    }): <tr>
-                            <td colSpan={5} />
+                    }): <tr className="w-full h-96 text-center font-semibold text-2xl">
+                            <td colSpan={5}>Não há vendas no dia de Hoje</td>
                         </tr>}
                 </tbody>
             </table>

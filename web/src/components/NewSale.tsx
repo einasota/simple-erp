@@ -22,6 +22,7 @@ export function NewSale() {
     const [method, setMethod] = useState<string>()
     const [client, setClient] = useState<string>()
     const [phone, setPhone] = useState<string>()
+    const [value, setValue] = useState<number>()
     const [dialog1, setDialog1] = useState(false)
     const [dialog2, setDialog2] = useState(false)
 
@@ -44,12 +45,12 @@ export function NewSale() {
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className='w-screen h-screen fixed inset-0 bg-black/50' />
-                <Dialog.Content className='h-5/6  w-4/6 p-10 flex flex-col bg-white fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+                <Dialog.Content className='h-[90%]  w-4/6 p-10 flex flex-col bg-white fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
                     <div className='flex flex-row justify-between items-center gap-2'>
                         <Dialog.Title className='flex flex-row gap-1 text-4xl font-semibold justify-center items-center mb-6'><Package size={36} color="#0f0f0f" /> Nova Venda</Dialog.Title>
                         <Dialog.Close className='flex justify-center items-center'>
                             <button onClick={() => setDialog1(false)}>
-                                <X size={24} color="#0f0f0f" />
+                                <X size={24} weight='bold' color="#0f0f0f" />
                             </button>
                         </Dialog.Close>
                     </div>
@@ -91,7 +92,7 @@ export function NewSale() {
                                 </fieldset>
                                 <fieldset>
                                     <label htmlFor="value">Valor:</label>
-                                    <input type="number" name="value" id="value" prefix='R$' className='p-2 rounded-lg mt-2 bg-gray-200 text-black' />
+                                    <input type="number" name="value" id="value" prefix='R$' className='p-2 rounded-lg mt-2 bg-gray-200 text-black' value={value} />
                                 </fieldset>
                                 <fieldset className='flex flex-row justify-start items-center gap-3'>
                                     <Checkbox.Root name="paid" id='paid' defaultChecked={false} checked={paid} onCheckedChange={setPaid} className='h-8 w-8 border border-black flex justify-center items-center rounded-lg'>
