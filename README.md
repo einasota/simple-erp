@@ -6,7 +6,7 @@
     <a href="https://github.com/einasota/simple-erp/commits/main"> 
     <img alt="Last Commit" src="https://img.shields.io/github/last-commit/einasota/simple-erp">
     </a>
-    <a href="https://github.com/einasota/simple-erp/blob/main/LICENSE.md">
+    <a href="https://github.com/einasota/simple-erp/blob/main/LICENSE">
     <img alt="License" src="https://img.shields.io/github/license/einasota/simple-erp">
     </a>
 </div>
