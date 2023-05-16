@@ -14,9 +14,9 @@
 
 [About](#about) | [Technologies](#technologies) | [License](#license)
 
-</div>
-
 *This is a personal project used for study.*
+#### I will be posting updates on [LinkedIn](https://www.linkedin.com/in/einasota/) and [Twitter](https://twitter.com/souzajhonata0).
+</div>
 
 ## About 
 Simple ERP is a project focused on managing sales and services and pricing. The need for it was born due to the difficulties I face in family work, where there is not much communication and there are still things done manually. Where some information ends up getting lost. And that was one of the ways I found to help at work and also study how to solve a real-life problem.
